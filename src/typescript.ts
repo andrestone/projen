@@ -77,6 +77,8 @@ export interface TypeScriptLibraryProjectOptions extends NodeProjectOptions {
 export class TypeScriptLibraryProject extends NodeProject {
   public readonly docgen?: boolean;
   public readonly docsDirectory: string;
+  public readonly eslint?: Eslint;
+  public readonly jest?: Jest;
 
   protected readonly srcdir: string;
   protected readonly libdir: string;
@@ -162,7 +164,7 @@ export class TypeScriptLibraryProject extends NodeProject {
     this.npmignore.exclude('/.projenrc.js');
 
     if (options.eslint ?? true) {
-      new Eslint(this);
+      this.eslint = new Eslint(this);
     }
 
     if (options.jest ?? true) {
@@ -184,7 +186,7 @@ export class TypeScriptLibraryProject extends NodeProject {
       // test code does not take a dependency on "lib" and instead on "src".
       this.addTestCommands(`rm -fr ${this.libdir}/`);
 
-      new Jest(this, {
+      this.jest = new Jest(this, {
         typescript: tsconfig,
         ...options.jestOptions,
       });
