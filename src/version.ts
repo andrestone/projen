@@ -60,7 +60,7 @@ export class Version extends Construct {
   }
 }
 
-export class LenaVersion extends Construct {
+export class LernaVersion extends Construct {
   private readonly versionFile: string = LERNA_VERSION_FILE;
   constructor(project: NodeProject) {
     super(project, 'lerna-version');

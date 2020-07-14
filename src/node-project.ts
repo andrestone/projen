@@ -5,7 +5,7 @@ import { IgnoreFile } from './ignore-file';
 import { License } from './license';
 import { GENERATION_DISCLAIMER, PROJEN_RC, PROJEN_VERSION } from './common';
 import { Lazy } from 'constructs';
-import { Version, LenaVersion } from './version';
+import { Version, LernaVersion } from './version';
 import { GithubWorkflow } from './github-workflow';
 import * as fs from 'fs-extra';
 import * as path from 'path';
@@ -264,7 +264,7 @@ export class NodeProject extends Project {
 
   public readonly manifest: any;
   private readonly testCommands = new Array<string>();
-  private readonly _version: Version | LenaVersion;
+  private readonly _version: Version | LernaVersion;
 
   /**
    * The PR build GitHub workflow. `undefined` if `buildWorkflow` is disabled.
@@ -382,7 +382,7 @@ export class NodeProject extends Project {
     this.addScripts({ test: Lazy.stringValue({ produce: () => this.renderTestCommand() }) });
 
     // version is read from a committed file called version.json which is how we bump (when not using Lerna)
-    this._version = options.lernaVersioning ? new LenaVersion(this) : new Version(this, options.versionFile);
+    this._version = options.lernaVersioning ? new LernaVersion(this) : new Version(this, options.versionFile);
     this.manifest.version = this.version;
 
     if (options.buildWorkflow ?? true) {
