@@ -72,6 +72,7 @@
   },
   "license": "Apache-2.0",
   "version": "0.3.2",
+  "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "jest": {
     "clearMocks": true,
@@ -93,7 +94,6 @@
       }
     }
   },
-  "main": "lib/index.js",
   "stability": "experimental",
   "jsii": {
     "outdir": "dist",

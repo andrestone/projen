@@ -11,8 +11,8 @@ Name|Description
 [Jest](#projen-jest)|Installs the following npm scripts:.
 [JsiiProject](#projen-jsiiproject)|*No description*
 [JsonFile](#projen-jsonfile)|*No description*
-[LenaVersion](#projen-lenaversion)|*No description*
 [LernaProject](#projen-lernaproject)|*No description*
+[LernaVersion](#projen-lernaversion)|*No description*
 [License](#projen-license)|*No description*
 [Mergify](#projen-mergify)|*No description*
 [NodeBuildWorkflow](#projen-nodebuildworkflow)|*No description*
@@ -452,35 +452,6 @@ Name | Type | Description
 
 
 
-## class LenaVersion 🔹 <a id="projen-lenaversion"></a>
-
-
-
-__Implements__: [IConstruct](#constructs-iconstruct)
-__Extends__: [Construct](#constructs-construct)
-
-### Initializer
-
-
-
-
-```ts
-new LenaVersion(project: NodeProject)
-```
-
-* **project** (<code>[NodeProject](#projen-nodeproject)</code>)  *No description*
-
-
-
-### Properties
-
-
-Name | Type | Description 
------|------|-------------
-**current**🔹 | <code>any</code> | <span></span>
-
-
-
 ## class LernaProject 🔹 <a id="projen-lernaproject"></a>
 
 
@@ -582,6 +553,35 @@ noHoist(project: string &#124; NodeProject, dependency: string &#124; NodeProjec
 
 
 
+
+
+
+## class LernaVersion 🔹 <a id="projen-lernaversion"></a>
+
+
+
+__Implements__: [IConstruct](#constructs-iconstruct)
+__Extends__: [Construct](#constructs-construct)
+
+### Initializer
+
+
+
+
+```ts
+new LernaVersion(project: NodeProject)
+```
+
+* **project** (<code>[NodeProject](#projen-nodeproject)</code>)  *No description*
+
+
+
+### Properties
+
+
+Name | Type | Description 
+-----|------|-------------
+**current**🔹 | <code>any</code> | <span></span>
 
 
 
