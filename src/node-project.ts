@@ -5,7 +5,7 @@ import { IgnoreFile } from './ignore-file';
 import { License } from './license';
 import { GENERATION_DISCLAIMER, PROJEN_RC, PROJEN_VERSION } from './common';
 import { Lazy } from 'constructs';
-import { Version } from './version';
+import { Version, LenaVersion } from './version';
 import { GithubWorkflow } from './github-workflow';
 import * as fs from 'fs-extra';
 import * as path from 'path';
@@ -42,6 +42,12 @@ export interface CommonOptions {
   readonly autoDetectBin?: boolean;
 
   readonly keywords?: string[];
+
+  /**
+   * Private projects.
+   *
+   */
+  readonly private?: boolean;
 
   /**
    * Version of projen to install.
@@ -234,6 +240,16 @@ export interface NodeProjectOptions extends ProjectOptions, CommonOptions {
    * Additional entries to .npmignore
    */
   readonly npmignore?: string[];
+
+  /**
+   * Use lerna for versioning
+   */
+  readonly lernaVersioning?: boolean;
+
+  /**
+   * Version file. A file that has an object with a `version` root key (e,g: lerna.json)
+   */
+  readonly versionFile?: string;
 }
 
 export class NodeProject extends Project {
@@ -248,7 +264,7 @@ export class NodeProject extends Project {
 
   public readonly manifest: any;
   private readonly testCommands = new Array<string>();
-  private readonly _version: Version;
+  private readonly _version: Version | LenaVersion;
 
   /**
    * The PR build GitHub workflow. `undefined` if `buildWorkflow` is disabled.
@@ -286,8 +302,8 @@ export class NodeProject extends Project {
     this.manifest = {
       '//': GENERATION_DISCLAIMER,
       'name': options.name,
+      'private': options.private || undefined,
       'description': options.description,
-      'main': 'lib/index.js',
       'repository': !options.repository ? undefined : {
         type: 'git',
         url: options.repository,
@@ -295,12 +311,13 @@ export class NodeProject extends Project {
       },
       'bin': this.bin,
       'scripts': this.scripts,
-      'author': {
-        name: options.authorName,
-        email: options.authorEmail,
-        url: options.authorUrl,
-        organization: options.authorOrganization ?? false,
-      },
+      'author': options.authorName ?
+        {
+          name: options.authorName,
+          email: options.authorEmail,
+          url: options.authorUrl,
+          organization: options.authorOrganization,
+        } : undefined,
       'homepage': options.homepage,
       'devDependencies': this.devDependencies,
       'peerDependencies': this.peerDependencies,
@@ -312,6 +329,7 @@ export class NodeProject extends Project {
 
     new JsonFile(this, 'package.json', {
       obj: this.manifest,
+      preserveJSONFields: ['version'], // this is managed by another script
     });
 
     this.addDependencies(options.dependencies ?? {});
@@ -363,8 +381,8 @@ export class NodeProject extends Project {
 
     this.addScripts({ test: Lazy.stringValue({ produce: () => this.renderTestCommand() }) });
 
-    // version is read from a committed file called version.json which is how we bump
-    this._version = new Version(this);
+    // version is read from a committed file called version.json which is how we bump (when not using Lerna)
+    this._version = options.lernaVersioning ? new LenaVersion(this) : new Version(this, options.versionFile);
     this.manifest.version = this.version;
 
     if (options.buildWorkflow ?? true) {
@@ -388,7 +406,7 @@ export class NodeProject extends Project {
         antitamper: options.antitamper,
       });
 
-      if (options.releaseToNpm) {
+      if (options.releaseToNpm && !options.private) {
         this.releaseWorkflow.addJobs({
           release_npm: {
             'name': 'Release to NPM',

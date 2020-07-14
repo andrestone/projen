@@ -137,6 +137,8 @@ export class JsiiProject extends TypeScriptLibraryProject {
 
     this.addFields({ types: `${libdir}/index.d.ts` });
 
+    this.addFields({ main: `${libdir}/index.js` });
+
     // this is an unhelpful warning
     const jsiiFlags = '--silence-warnings=reserved-word';
 

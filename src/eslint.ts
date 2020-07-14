@@ -88,7 +88,6 @@ export class Eslint extends Construct {
         ignorePatterns: [
           '*.js',
           '*.d.ts',
-          'node_modules/',
           '*.generated.ts',
           'coverage',
         ],
