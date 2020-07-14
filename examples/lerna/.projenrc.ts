@@ -5,6 +5,7 @@ const common = require('./projen-common');
 const cdk8sProject = new LernaProject({
   name: 'cdk8s',
 	lernaVersioning: false,
+	outdir: 'example-output'
 });
 new Jest(cdk8sProject, {
   typescript: new TypescriptConfig(cdk8sProject, {
@@ -124,6 +125,15 @@ const cdk8sPlusPackage = new JsiiProject({
 
 common.fixup(cdk8sPlusPackage);
 
-cdk8sProject.addPackage(cdk8sPlusPackage)
-cdk8sProject.addPackage(cdk8sPackage)
+cdk8sProject.addPackage(cdk8sPlusPackage);
+cdk8sProject.addPackage(cdk8sPackage);
+cdk8sProject.noHoist(cdk8sPackage, 'yaml');
+cdk8sProject.noHoist(cdk8sPackage, 'yaml/**');
+cdk8sProject.noHoist(cdk8sPackage, 'json-stable-stringify');
+cdk8sProject.noHoist(cdk8sPackage, 'json-stable-stringify/**');
+cdk8sProject.noHoist(cdk8sPackage, 'follow-redirects');
+cdk8sProject.noHoist(cdk8sPackage, 'follow-redirects/**');
+cdk8sProject.noHoist(cdk8sPlusPackage, 'minimatch');
+cdk8sProject.noHoist(cdk8sPlusPackage, 'minimatch/**');
+
 cdk8sProject.synth();
