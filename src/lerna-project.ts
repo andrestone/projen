@@ -43,6 +43,10 @@ export class LernaProject extends NodeProject {
     });
   }
 
+  public addWorkspace(pattern: string) {
+    if (!this.workspaces.includes(pattern)) this.workspaces.push(pattern);
+  }
+
   public addPackage(project: NodeProject, location?: string) {
 
     const packageLocation = `${location || 'packages'}`;
@@ -57,7 +61,7 @@ export class LernaProject extends NodeProject {
       process.stderr.write(`Error when synthesizing lerna package: ${e}\n`);
       throw e;
     }
-    if (!this.workspaces.includes(`${packageLocation}/*`)) this.workspaces.push(`${packageLocation}/*`);
+    this.addWorkspace(`${packageLocation}/*`);
     this.packages.push(project);
   }
 
