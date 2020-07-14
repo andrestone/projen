@@ -578,6 +578,19 @@ addPackage(project: NodeProject, location?: string): void
 
 
 
+#### addWorkspace(pattern)🔹 <a id="projen-lernaproject-addworkspace"></a>
+
+
+
+```ts
+addWorkspace(pattern: string): void
+```
+
+* **pattern** (<code>string</code>)  *No description*
+
+
+
+
 #### noHoist(project, dependency)🔹 <a id="projen-lernaproject-nohoist"></a>
 
 
