@@ -92,6 +92,8 @@ export class TypeScriptLibraryProject extends NodeProject {
     this.docgen = options.docgen;
     this.docsDirectory = options.docsDirectory || 'docs/';
 
+    this.addFields({ main: `${this.libdir}/index.js` });
+
     this.addScripts({
       compile: 'tsc',
       watch: 'tsc -w',
