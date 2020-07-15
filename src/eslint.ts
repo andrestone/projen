@@ -71,6 +71,7 @@ export class Eslint extends Construct {
       '*.js',
       '*.d.ts',
       'node_modules/',
+      'templates/**/*.ts',
       '*.generated.ts',
       'coverage',
     ];

@@ -21,6 +21,9 @@ class Command implements yargs.CommandModule {
 
     const templatePath = path.join(templatesPath, args['TEMPLATE']);
     fs.copySync(templatePath, '.', {recursive: true});
+    const templateContent = fs.readFileSync(path.join(templatePath, '.template/template.js')) + '\nproject.synth()';
+    fs.writeFileSync('.projenrc.js', templateContent);
+    fs.removeSync('.template');
     console.error(`${PROJEN_RC} generated from the "${args['TEMPLATE']}" template.`);
     console.error('Now, go edit it (nothing there is what you want).');
     console.error('When you are done, simply run "npx projen" to get the magic going.');

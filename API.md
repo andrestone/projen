@@ -33,6 +33,7 @@ Name|Description
 [CommonOptions](#projen-commonoptions)|*No description*
 [CoverageThreshold](#projen-coveragethreshold)|*No description*
 [FileBaseOptions](#projen-filebaseoptions)|*No description*
+[FromTemplateOptions](#projen-fromtemplateoptions)|*No description*
 [JestOptions](#projen-jestoptions)|*No description*
 [JsiiDotNetTarget](#projen-jsiidotnettarget)|*No description*
 [JsiiJavaTarget](#projen-jsiijavatarget)|*No description*
@@ -46,6 +47,7 @@ Name|Description
 [MergifyRule](#projen-mergifyrule)|*No description*
 [NodeBuildWorkflowOptions](#projen-nodebuildworkflowoptions)|*No description*
 [NodeProjectOptions](#projen-nodeprojectoptions)|*No description*
+[PackageFromTemplateOptions](#projen-packagefromtemplateoptions)|*No description*
 [PeerDependencyOptions](#projen-peerdependencyoptions)|*No description*
 [ProjectOptions](#projen-projectoptions)|*No description*
 [TypeScriptCompilerOptions](#projen-typescriptcompileroptions)|*No description*
@@ -597,7 +599,7 @@ new LernaProject(options: LernaProjectOptions)
 
 Name | Type | Description 
 -----|------|-------------
-**packages**🔹 | <code>Array<[NodeProject](#projen-nodeproject)></code> | <span></span>
+**packages**🔹 | <code>Array<[LernaPackage](#projen-lernapackage)></code> | <span></span>
 
 ### Methods
 
@@ -615,6 +617,26 @@ addPackage(project: NodeProject, location?: string): void
 
 
 
+
+#### addPackageFromTemplate(options)🔹 <a id="projen-lernaproject-addpackagefromtemplate"></a>
+
+Adds a Package to the monorepo using a Projen Template.
+
+If a string is passed, a project is built using the referred template.
+Can also add a package from a Promise object created via `NodeProject.fromTemplate`
+
+```ts
+addPackageFromTemplate(options: PackageFromTemplateOptions): NodeProject
+```
+
+* **options** (<code>[PackageFromTemplateOptions](#projen-packagefromtemplateoptions)</code>)  *No description*
+  * **template** (<code>string &#124; [NodeProject](#projen-nodeproject)</code>)  Template name or promise (NodeProject.fromTemplate). 
+  * **location** (<code>string</code>)  Location. __*Default*__: 'packages'
+  * **modifier** (<code>any</code>)  A function that takes the project as an object to allow changes to the template. __*Default*__: -
+  * **name** (<code>string</code>)  Name of the package (folder name). __*Default*__: 'package.json.name'
+
+__Returns__:
+* <code>[NodeProject](#projen-nodeproject)</code>
 
 #### addWorkspace(pattern)🔹 <a id="projen-lernaproject-addworkspace"></a>
 
@@ -639,6 +661,22 @@ noHoist(project: string &#124; NodeProject, dependency: string &#124; NodeProjec
 
 * **project** (<code>string &#124; [NodeProject](#projen-nodeproject)</code>)  *No description*
 * **dependency** (<code>string &#124; [NodeProject](#projen-nodeproject)</code>)  *No description*
+
+
+
+
+#### onSynthesize(session)🔹 <a id="projen-lernaproject-onsynthesize"></a>
+
+Allows this construct to emit artifacts into the cloud assembly during synthesis.
+
+This method is usually implemented by framework-level constructs such as `Stack` and `Asset`
+as they participate in synthesizing the cloud assembly.
+
+```ts
+onSynthesize(session: ISynthesisSession): void
+```
+
+* **session** (<code>[ISynthesisSession](#constructs-isynthesissession)</code>)  *No description*
 
 
 
@@ -855,6 +893,7 @@ new NodeProject(options: NodeProjectOptions)
 Name | Type | Description 
 -----|------|-------------
 **manifest**🔹 | <code>any</code> | <span></span>
+**name**🔹 | <code>any</code> | Returns the name of the package.
 **npmDistTag**🔹 | <code>string</code> | <span></span>
 **npmignore**🔹 | <code>[IgnoreFile](#projen-ignorefile)</code> | <span></span>
 **version**🔹 | <code>any</code> | Returns the current version of the project.
@@ -972,6 +1011,24 @@ addTestCommands(...commands: string[]): void
 
 
 
+
+#### *static* fromTemplate(options)🔹 <a id="projen-nodeproject-fromtemplate"></a>
+
+
+
+```ts
+static fromTemplate(options: FromTemplateOptions): NodeProject
+```
+
+* **options** (<code>[FromTemplateOptions](#projen-fromtemplateoptions)</code>)  *No description*
+  * **templateName** (<code>string</code>)  *No description* 
+  * **copyFiles** (<code>boolean</code>)  *No description* __*Optional*__
+  * **modifier** (<code>any</code>)  *No description* __*Optional*__
+  * **name** (<code>string</code>)  *No description* __*Optional*__
+  * **outDir** (<code>string</code>)  *No description* __*Optional*__
+
+__Returns__:
+* <code>[NodeProject](#projen-nodeproject)</code>
 
 
 
@@ -1328,6 +1385,23 @@ Name | Type | Description
 
 
 
+## struct FromTemplateOptions 🔹 <a id="projen-fromtemplateoptions"></a>
+
+
+
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**templateName**🔹 | <code>string</code> | <span></span>
+**copyFiles**?🔹 | <code>boolean</code> | __*Optional*__
+**modifier**?🔹 | <code>any</code> | __*Optional*__
+**name**?🔹 | <code>string</code> | __*Optional*__
+**outDir**?🔹 | <code>string</code> | __*Optional*__
+
+
+
 ## struct JestOptions 🔹 <a id="projen-jestoptions"></a>
 
 
@@ -1473,8 +1547,8 @@ Name | Type | Description
 
 Name | Type | Description 
 -----|------|-------------
+**location**🔹 | <code>string</code> | <span></span>
 **project**🔹 | <code>[NodeProject](#projen-nodeproject)</code> | <span></span>
-**location**?🔹 | <code>string</code> | __*Optional*__
 
 
 
@@ -1646,6 +1720,22 @@ Name | Type | Description
 **workflowBootstrapSteps**?🔹 | <code>Array<any></code> | Workflow steps to use in order to bootstrap this repo.<br/>__*Default*__: [ { run: `npx projen${PROJEN_VERSION}` }, { run: 'yarn install --frozen-lockfile' } ]
 **workflowContainerImage**?🔹 | <code>string</code> | Container image to use for GitHub workflows.<br/>__*Default*__: default image
 **workflowNodeVersion**?🔹 | <code>string</code> | The node version to use in GitHub workflows.<br/>__*Default*__: same as `minNodeVersion`
+
+
+
+## struct PackageFromTemplateOptions 🔹 <a id="projen-packagefromtemplateoptions"></a>
+
+
+
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**template**🔹 | <code>string &#124; [NodeProject](#projen-nodeproject)</code> | Template name or promise (NodeProject.fromTemplate).
+**location**?🔹 | <code>string</code> | Location.<br/>__*Default*__: 'packages'
+**modifier**?🔹 | <code>any</code> | A function that takes the project as an object to allow changes to the template.<br/>__*Default*__: -
+**name**?🔹 | <code>string</code> | Name of the package (folder name).<br/>__*Default*__: 'package.json.name'
 
 
 

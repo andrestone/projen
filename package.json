@@ -78,10 +78,12 @@
     "clearMocks": true,
     "collectCoverage": true,
     "coveragePathIgnorePatterns": [
-      "/node_modules/"
+      "/node_modules/",
+      "/templates/"
     ],
     "testPathIgnorePatterns": [
-      "/node_modules/"
+      "/node_modules/",
+      "/templates/"
     ],
     "preset": "ts-jest",
     "testMatch": [

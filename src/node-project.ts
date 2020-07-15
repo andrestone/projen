@@ -9,6 +9,7 @@ import { Version, LernaVersion } from './version';
 import { GithubWorkflow } from './github-workflow';
 import * as fs from 'fs-extra';
 import * as path from 'path';
+import { availableTemplates, templatesPath } from './cli';
 
 const ANTITAMPER_COMMAND = [
   {
@@ -252,6 +253,15 @@ export interface NodeProjectOptions extends ProjectOptions, CommonOptions {
   readonly versionFile?: string;
 }
 
+
+export interface FromTemplateOptions {
+  readonly templateName: string;
+  readonly outDir?: string;
+  readonly copyFiles?: boolean;
+  readonly name?: string;
+  readonly modifier?: any;
+}
+
 export class NodeProject extends Project {
   public readonly npmignore: IgnoreFile;
 
@@ -452,6 +462,13 @@ export class NodeProject extends Project {
   }
 
   /**
+   * Returns the name of the package.
+   */
+  public get name() {
+    return this.manifest.name;
+  }
+
+  /**
    * Returns the current version of the project.
    */
   public get version() {
@@ -582,6 +599,29 @@ export class NodeProject extends Project {
       '# parcel-bundler cache (https://parceljs.org/)',
       '.cache',
     );
+  }
+  public static fromTemplate(options: FromTemplateOptions): Promise<NodeProject> {
+    if (availableTemplates.includes(options.templateName)) {
+      try {
+        let template = import('../templates/' + options.templateName + '/.template/template');
+        template.then(options.modifier);
+        if (options.copyFiles) {
+          template.then(project => {
+            const templatePath = path.join(templatesPath, options.templateName);
+            const outPath = options.outDir ? path.join(options.outDir, options.name || project.name) : '.';
+            fs.copySync(templatePath, outPath, {recursive: true});
+            fs.removeSync(path.join(outPath, '.template'));
+            if (options.name) project.addFields({name: options.name});
+          });
+        }
+        return template;
+      } catch (e) {
+        process.stderr.write(`Error when creating project from template: ${e}\n`);
+        throw e;
+      }
+    } else {
+      throw new Error(`Template doesn't exist: ${options.templateName}`);
+    }
   }
 }
 

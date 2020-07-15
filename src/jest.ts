@@ -56,7 +56,7 @@ export class Jest extends Construct {
 
     project.addDevDependencies({ jest: Semver.caret('26.0.1') });
 
-    this.ignorePatterns = options.ignorePatterns ?? [ '/node_modules/' ];
+    this.ignorePatterns = options.ignorePatterns ?? [ '/node_modules/', '/templates/' ];
 
     this.config = {
       clearMocks: true,
