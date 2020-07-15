@@ -4,6 +4,7 @@
 
 Name|Description
 ----|-----------
+[AnyFile](#projen-anyfile)|*No description*
 [Eslint](#projen-eslint)|*No description*
 [FileBase](#projen-filebase)|*No description*
 [GithubWorkflow](#projen-githubworkflow)|*No description*
@@ -28,6 +29,7 @@ Name|Description
 
 Name|Description
 ----|-----------
+[AnyFileOptions](#projen-anyfileoptions)|*No description*
 [CommonOptions](#projen-commonoptions)|*No description*
 [CoverageThreshold](#projen-coveragethreshold)|*No description*
 [FileBaseOptions](#projen-filebaseoptions)|*No description*
@@ -56,6 +58,42 @@ Name|Description
 Name|Description
 ----|-----------
 [Stability](#projen-stability)|*No description*
+
+
+
+## class AnyFile 🔹 <a id="projen-anyfile"></a>
+
+
+
+__Implements__: [IConstruct](#constructs-iconstruct)
+__Extends__: [FileBase](#projen-filebase)
+
+### Initializer
+
+
+
+
+```ts
+new AnyFile(project: Project, name: string, options: AnyFileOptions)
+```
+
+* **project** (<code>[Project](#projen-project)</code>)  *No description*
+* **name** (<code>string</code>)  *No description*
+* **options** (<code>[AnyFileOptions](#projen-anyfileoptions)</code>)  *No description*
+  * **committed** (<code>boolean</code>)  Indicates whether this file should be committed to git or ignored. __*Default*__: true
+  * **editGitignore** (<code>boolean</code>)  Update the project's .gitignore file. __*Default*__: true
+  * **readonly** (<code>boolean</code>)  Whether the generated file should be readonly. __*Default*__: true
+  * **content** (<code>string</code>)  File contents (utf-8). 
+
+
+
+### Properties
+
+
+Name | Type | Description 
+-----|------|-------------
+**data**🔹 | <code>string</code> | <span></span>
+**options**🔹 | <code>[AnyFileOptions](#projen-anyfileoptions)</code> | <span></span>
 
 
 
@@ -124,7 +162,7 @@ addRules(rules: Map<string, any>): void
 
 __Implements__: [IConstruct](#constructs-iconstruct)
 __Extends__: [Construct](#constructs-construct)
-__Implemented by__: [GithubWorkflow](#projen-githubworkflow), [IgnoreFile](#projen-ignorefile), [JsonFile](#projen-jsonfile), [License](#projen-license), [NodeBuildWorkflow](#projen-nodebuildworkflow)
+__Implemented by__: [AnyFile](#projen-anyfile), [GithubWorkflow](#projen-githubworkflow), [IgnoreFile](#projen-ignorefile), [JsonFile](#projen-jsonfile), [License](#projen-license), [NodeBuildWorkflow](#projen-nodebuildworkflow)
 
 ### Initializer
 
@@ -1201,6 +1239,22 @@ new Version(project: NodeProject, versionFile?: string)
 Name | Type | Description 
 -----|------|-------------
 **current**🔹 | <code>string</code> | Returns the current version of the project.
+
+
+
+## struct AnyFileOptions 🔹 <a id="projen-anyfileoptions"></a>
+
+
+
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**content**🔹 | <code>string</code> | File contents (utf-8).
+**committed**?🔹 | <code>boolean</code> | Indicates whether this file should be committed to git or ignored.<br/>__*Default*__: true
+**editGitignore**?🔹 | <code>boolean</code> | Update the project's .gitignore file.<br/>__*Default*__: true
+**readonly**?🔹 | <code>boolean</code> | Whether the generated file should be readonly.<br/>__*Default*__: true
 
 
 

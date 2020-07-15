@@ -90,3 +90,19 @@ export abstract class FileBase extends Construct {
     }
   }
 }
+
+export interface AnyFileOptions extends FileBaseOptions {
+  /**
+  * File contents (utf-8)
+  */
+  readonly content: string;
+}
+
+export class AnyFile extends FileBase {
+  constructor(project: Project, name: string, public readonly options: AnyFileOptions){
+    super(project, name, options)
+  }
+  protected get data(): string {
+    return this.options.content;
+  }
+}
