@@ -1,6 +1,6 @@
 const {TypeScriptLibraryProject, Semver} = require('projen');
 
-const cdkVersion = '1.51.0';
+const cdkVersion = '1.54.0';
 
 const project = new TypeScriptLibraryProject({
     name: 'cdk-app',

@@ -225,7 +225,7 @@ export interface NodeProjectOptions extends ProjectOptions, CommonOptions {
    * License's SPDX identifier.
    * See https://github.com/eladb/projen/tree/master/license-text for a list of supported licenses.
    */
-  readonly license?: string;
+  readonly license?: string | boolean;
 
   /**
    * Package's Stability
@@ -340,6 +340,7 @@ export class NodeProject extends Project {
     new JsonFile(this, 'package.json', {
       obj: this.manifest,
       preserveJSONFields: ['version'], // this is managed by another script
+      readonly: false,
     });
 
     this.addDependencies(options.dependencies ?? {});
@@ -366,11 +367,13 @@ export class NodeProject extends Project {
 
     // set license and produce license file
     const license = options.license ?? 'Apache-2.0';
-    this.manifest.license = license;
-    new License(this, license, {
-      copyrightOwner: options.copyrightOwner ?? options.authorName,
-      copyrightPeriod: options.copyrightPeriod,
-    });
+    this.manifest.license = license ? license : undefined;
+    if (typeof license == 'string') {
+      new License(this, license, {
+        copyrightOwner: options.copyrightOwner ?? options.authorName,
+        copyrightPeriod: options.copyrightPeriod,
+      });
+    }
 
     this.addScripts({ projen: `node ${PROJEN_RC} && yarn install` });
     this.addScripts({ 'projen:upgrade': 'yarn upgrade projen && yarn projen' });

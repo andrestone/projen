@@ -435,6 +435,11 @@ export interface TypeScriptCompilerOptions {
    * Only use to control the output directory structure with `outDir`.
    */
   readonly rootDir?: string;
+
+  /**
+   * Other properties
+   */
+  readonly [key: string]: any;
 }
 
 export class TypescriptConfig extends Construct {

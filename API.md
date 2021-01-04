@@ -584,7 +584,7 @@ new LernaProject(options: LernaProjectOptions)
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
   * **homepage** (<code>string</code>)  Package's Homepage / Website. __*Optional*__
   * **lernaVersioning** (<code>boolean</code>)  Use lerna for versioning. __*Optional*__
-  * **license** (<code>string</code>)  License's SPDX identifier. __*Optional*__
+  * **license** (<code>string &#124; boolean</code>)  License's SPDX identifier. __*Optional*__
   * **npmignore** (<code>Array<string></code>)  Additional entries to .npmignore. __*Optional*__
   * **repository** (<code>string</code>)  The repository is the location where the actual code for your package lives. __*Optional*__
   * **repositoryDirectory** (<code>string</code>)  If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. __*Optional*__
@@ -878,7 +878,7 @@ new NodeProject(options: NodeProjectOptions)
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
   * **homepage** (<code>string</code>)  Package's Homepage / Website. __*Optional*__
   * **lernaVersioning** (<code>boolean</code>)  Use lerna for versioning. __*Optional*__
-  * **license** (<code>string</code>)  License's SPDX identifier. __*Optional*__
+  * **license** (<code>string &#124; boolean</code>)  License's SPDX identifier. __*Optional*__
   * **npmignore** (<code>Array<string></code>)  Additional entries to .npmignore. __*Optional*__
   * **repository** (<code>string</code>)  The repository is the location where the actual code for your package lives. __*Optional*__
   * **repositoryDirectory** (<code>string</code>)  If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. __*Optional*__
@@ -1198,7 +1198,7 @@ new TypeScriptLibraryProject(options: TypeScriptLibraryProjectOptions)
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
   * **homepage** (<code>string</code>)  Package's Homepage / Website. __*Optional*__
   * **lernaVersioning** (<code>boolean</code>)  Use lerna for versioning. __*Optional*__
-  * **license** (<code>string</code>)  License's SPDX identifier. __*Optional*__
+  * **license** (<code>string &#124; boolean</code>)  License's SPDX identifier. __*Optional*__
   * **npmignore** (<code>Array<string></code>)  Additional entries to .npmignore. __*Optional*__
   * **repository** (<code>string</code>)  The repository is the location where the actual code for your package lives. __*Optional*__
   * **repositoryDirectory** (<code>string</code>)  If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. __*Optional*__
@@ -1581,7 +1581,7 @@ Name | Type | Description
 **keywords**?🔹 | <code>Array<string></code> | __*Optional*__
 **lernaVersioning**?🔹 | <code>boolean</code> | Use lerna for versioning.<br/>__*Optional*__
 **libdir**?🔹 | <code>string</code> | Compiler artifacts output directory.<br/>__*Default*__: "lib"
-**license**?🔹 | <code>string</code> | License's SPDX identifier.<br/>__*Optional*__
+**license**?🔹 | <code>string &#124; boolean</code> | License's SPDX identifier.<br/>__*Optional*__
 **maxNodeVersion**?🔹 | <code>string</code> | Minimum node.js version to require via `engines` (inclusive).<br/>__*Default*__: no max
 **minNodeVersion**?🔹 | <code>string</code> | Node.js version to require via package.json `engines` (inclusive).<br/>__*Default*__: no "engines" specified
 **npmDistTag**?🔹 | <code>string</code> | The dist-tag to use when releasing to npm.<br/>__*Default*__: "latest"
@@ -1697,7 +1697,7 @@ Name | Type | Description
 **keywords**?🔹 | <code>Array<string></code> | __*Optional*__
 **lernaVersioning**?🔹 | <code>boolean</code> | Use lerna for versioning.<br/>__*Optional*__
 **libdir**?🔹 | <code>string</code> | Compiler artifacts output directory.<br/>__*Default*__: "lib"
-**license**?🔹 | <code>string</code> | License's SPDX identifier.<br/>__*Optional*__
+**license**?🔹 | <code>string &#124; boolean</code> | License's SPDX identifier.<br/>__*Optional*__
 **maxNodeVersion**?🔹 | <code>string</code> | Minimum node.js version to require via `engines` (inclusive).<br/>__*Default*__: no max
 **minNodeVersion**?🔹 | <code>string</code> | Node.js version to require via package.json `engines` (inclusive).<br/>__*Default*__: no "engines" specified
 **npmDistTag**?🔹 | <code>string</code> | The dist-tag to use when releasing to npm.<br/>__*Default*__: "latest"
@@ -1835,7 +1835,7 @@ Name | Type | Description
 **keywords**?🔹 | <code>Array<string></code> | __*Optional*__
 **lernaVersioning**?🔹 | <code>boolean</code> | Use lerna for versioning.<br/>__*Optional*__
 **libdir**?🔹 | <code>string</code> | Compiler artifacts output directory.<br/>__*Default*__: "lib"
-**license**?🔹 | <code>string</code> | License's SPDX identifier.<br/>__*Optional*__
+**license**?🔹 | <code>string &#124; boolean</code> | License's SPDX identifier.<br/>__*Optional*__
 **maxNodeVersion**?🔹 | <code>string</code> | Minimum node.js version to require via `engines` (inclusive).<br/>__*Default*__: no max
 **mergify**?🔹 | <code>boolean</code> | Adds mergify configuration.<br/>__*Default*__: true
 **mergifyOptions**?🔹 | <code>[MergifyOptions](#projen-mergifyoptions)</code> | Options for mergify.<br/>__*Default*__: default options
